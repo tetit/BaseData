@@ -1,0 +1,3 @@
+SELECT * FROM `wypozyczenia` ORDER by max(`Ksiagka_id`), MIN(`Ksiagka_id`), AVG(`Ksiagka_id`)
+SELECT AVG(`Ksiagka_id`) FROM `wypozyczenia` WHERE 1
+SELECT AVG(`Ksiagka_id`), max(`Ksiagka_id`), min(`Ksiagka_id`) FROM `wypozyczenia`

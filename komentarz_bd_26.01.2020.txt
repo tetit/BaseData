@@ -1,0 +1,51 @@
+﻿CREATE DATABASE `wypozyczania_26.01.2020`
+
+
+
+SELECT * FROM `autorzy`, `ksiazki`
+
+
+
+SELECT * FROM `autorzy`, `ksiazki`, `wypozyczenia`
+WHERE
+`autorzy`.`id_autora`=`ksiazki`.`autor_id`
+AND
+`ksiazki`.`id_ksiazki`=`wypozyczenia`.`ksiazka_id` 
+
+
+
+SELECT * FROM `autorzy`, `ksiazki`, `wypozyczenia`
+WHERE
+`autorzy`.`id_autora`=`ksiazki`.`autor_id`
+AND
+`ksiazki`.`id_ksiazki`=`wypozyczenia`.`ksiazka_id` 
+ORDER BY 'rok_urodzienia'
+
+
+INSERT INTO `autorzy` (`id_autora`, `nazwisko`, `imie_1`, `imie_2`, `rok_urodzienia`, `rok_zgonu`, `narodowosc`) VALUES (NULL, 'Solni', 'Henryk', 'Bran', '1900', '1978', 'polak');
+
+
+
+SELECT * FROM `autorzy`, `ksiazki`, `wypozyczenia`
+WHERE
+`autorzy`.`id_autora`=`ksiazki`.`autor_id`
+AND
+`ksiazki`.`id_ksiazki`=`wypozyczenia`.`ksiazka_id` 
+GROUP BY 'rok_urodzienia'
+ORDER BY 'rok_urodzienia'
+
+SELECT MAX(`rok_urodzienia`), `rok_zgonu` FROM `autorzy`, `ksiazki`, `wypozyczenia`
+WHERE
+`autorzy`.`id_autora`=`ksiazki`.`autor_id`
+AND
+`ksiazki`.`id_ksiazki`=`wypozyczenia`.`ksiazka_id`
+
+
+
+
+SELECT MIN(`rok_urodzienia`), `rok_zgonu` FROM `autorzy`, `ksiazki`, `wypozyczenia`
+WHERE
+`autorzy`.`id_autora`=`ksiazki`.`autor_id`
+AND
+`ksiazki`.`id_ksiazki`=`wypozyczenia`.`ksiazka_id`
+GROUP BY `rok_zgonu`

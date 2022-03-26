@@ -1,0 +1,102 @@
+CREATE DATABASE `wypozyczenia_plyt` 
+//polaczenie pozwalaęncee utworzyć bazę danych wypozyczania_plyt
+
+CREATE TABLE `autorzy`
+(
+    `id_autora` int(40) not null AUTO_INCREMENT PRIMARY KEY,
+    `nazwisko` varchar(40) not null,
+    `imie_1` varchar(40) not null,
+    `imie_2` varchar(40) not null,
+    `rok_urodzienia` int(4) not null,
+    `rok_zgonu` int(4),
+    `narodowosc` varchar(40) not null
+    )
+//polaczenie pozwalaęncee utworzyć tabelę autorzy o 7 pól
+ 
+ CREATE TABLE `ksiazki`
+(
+    `id_ksiazki` int(40) not null AUTO_INCREMENT,
+    `tytul` varchar(40) not null,
+    `autor_id` int(40) not null,
+    `rok_wydania` int(4) not null,
+    `wydawnyctwo` varchar(40) not null,
+    `okladka` varchar(40) not null,
+    `liczba_stron` int(10) not null,
+    PRIMARY KEY (`id_ksiazki`),
+    FOREIGN KEY (`autor_id`) REFERENCES `autorzy`(`id_autora`)    
+    )
+//polaczenie pozwalaęncee utworzyć tabelę ksiazki ze zdefinowaniem klucza glównego i obcego
+
+CREATE TABLE `wypozyczenia`
+(
+    `id_wypozyczenia` int(40) not null AUTO_INCREMENT,
+    `nazwisko` varchar(40) not null,
+    `imie_1` varchar(40) not null,
+    `imie_2` varchar(40) not null,
+    `miejscewosc` varchar(40) not null,
+    `ulica` varchar(40) not null,
+    `nr_domu` int(40) not null,
+    `nr_mieshkania` int(40) not null,
+    `ksiazka_id` int(40) not null,
+    `data_wypozyczenia` int(4) not null,
+    `data_zwrotu` int(4) not null,
+    `kara` int(10) not null,
+    PRIMARY KEY (`id_wypozyczenia`),
+    FOREIGN KEY (`ksiazka_id`) REFERENCES `ksiazki`(`id_ksiazki`)    
+    )
+//polaczenie pozwalaęncee utworzyć tabelę wypozyczenia ze zdefinowaniem klucza glównego i obcego
+
+INSERT INTO `autorzy`(`id_autora`, `nazwisko`, `imie_1`, `imie_2`, `rok_urodzienia`, `rok_zgonu`, `narodowosc`) VALUES 
+(1,'Mickiewicz','Adam','Gregosh','1878','1956','polak'),
+(2, 'Sienkiewicz', 'Henryk', 'Bran', '1900', '1978', 'polak'),
+(3, 'Pilipuk', 'Andrzej', 'Nie', '1874', '1950', 'polak'),
+(4, 'Szewczenko', 'Taras', 'Nie', '1814', '1861', 'ukrainec'),
+(5, 'Sekspir', 'Wiliam', 'Nie', '1834', '1861', 'anglik')
+//dodanie 5 rekordów do tabeli autorzy
+
+INSERT INTO `ksiazki` VALUES 
+('', 'Potop', 2, 1950, 'PLW', 'twarda', 350),
+('', 'Dziady', 1, 2000, 'PLW', 'miekka', 500),
+('', 'Kobzar',4 , 1980, 'PLW', 'twarda', 700),
+('', 'Gora', 3, 2020, 'PLW','miekka', 50),
+('', 'Gamlet', 5, 1958, 'PLW', 'miekka', 500)
+//dodanie 5 rekordów do tabeli ksiazki
+
+INSERT INTO `wypozyczenia` VALUES
+('', 'Tymoshchuk', 'Tetiana', 'Teti', 'Warszawa', 'Pelczynskiego', 5, 10, 4, 2019, 2020, 0),
+('', 'Solom', 'Roni', 'Bar', 'łodz', 'Kwitky', 7, 10, 1, 2020, 2020, 27),
+('', 'Krzysz', 'Agata', 'Lia', 'Kraków', 'Zemna', 6, 32, 2, 2018, 2019, 100),
+('', 'Zenon', 'Darian', 'Nie', 'łodz', 'Zymna', 16, 239, 3, 2017, 2020, 200),
+('', 'Chackiewich', 'Gregosh', 'Damian', 'Wrocław', 'Stary_Zamok', 45, 14, 5, 2016, 2020, 500)
+//dodanie 5 rekordów do tabeli wypozyczenia
+
+SELECT `nazwisko`, `imie_1` 
+FROM `autorzy` WHERE
+`nzwisko`= 'Mickiewicz'
+AND `imie_1`= 'Adam'
+//wybór z tabeli autorzy według imeni i nazwiska autora
+
+SELECT * FROM `autorzy`, `ksiazki`, `wypozyczenia`
+//wybór wszystkich rekordów wszystkich tabel
+
+SELECT * FROM `autorzy`, `ksiazki`, `wypozyczenia`
+WHERE
+`autorzy`.`id_autora`=`ksiazki`.`autor_id`
+AND
+`ksiazki`.`id_ksiazki`=`wypozyczenia`.`ksiazka_id`
+//wybór rekordów ze wspólnymy kluczamy wszystkich tabel 
+
+SELECT * FROM `autorzy`, `ksiazki`, `wypozyczenia`
+WHERE
+`autorzy`.`id_autora`=`ksiazki`.`autor_id`
+AND
+`ksiazki`.`id_ksiazki`=`wypozyczenia`.`ksiazka_id` 
+LIMIT 3
+//wybór 3 rekordów ze wspólnymy kluczamy wszystkich tabel 
+
+SELECT `autorzy`.*, `wypozyczenia`.* FROM `autorzy`, `ksiazki`, `wypozyczenia`
+WHERE
+`autorzy`.`id_autora`=`ksiazki`.`autor_id`
+AND
+`ksiazki`.`id_ksiazki`=`wypozyczenia`.`ksiazka_id` 
+//wybór wszystkich rekordów z tabel autorzy, wypozyczenia
